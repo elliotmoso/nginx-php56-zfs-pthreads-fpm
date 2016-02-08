@@ -85,7 +85,7 @@ make && make install && \
 cp /usr/local/src/php5-build/php-$PHP_VERSION/php.ini-production /opt/php-$PHP_VERSION/lib/php.ini && \
 cp /opt/php-$PHP_VERSION/etc/php-fpm.conf.default /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
 /opt/php-$PHP_VERSION/bin/pecl install pthreads-1.0.0 && \
-echo "extension=pthreads.so" >> /etc/php.ini
+echo "extension=pthreads.so" >> /opt/php-$PHP_VERSION/lib/php.ini
 
 
 RUN apt-get remove --purge -y software-properties-common && \
@@ -118,7 +118,7 @@ rm -Rf /etc/nginx/sites-available/default && \
 mkdir -p /etc/nginx/ssl/
 ADD ./nginx-site.conf /etc/nginx/sites-available/default.conf
 RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
-
+RUN echo -e "[global]\nerror_log = /dev/null\ndaemonize = no\ninclude=etc/pool.d/*.conf" > /opt/php-$PHP_VERSION/etc/php-fpm.conf
 # Install and Configure Newrelic
 RUN sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list && \
     wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
@@ -127,10 +127,11 @@ RUN sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list && \
 RUN apt-get install newrelic-php5 -y
 
 # Add static PHP-FPM Config
-ADD ./www.conf /opt/php-$PHP_VERSION/fpm/pool.d/www.conf
+ADD ./www.conf /opt/php-$PHP_VERSION/etc/pool.d/www.conf
 
 # Supervisor Config
 ADD ./supervisord.conf /etc/supervisord.conf
+RUN sed -i "s/PHP_VERSION/$PHP_VERSION" /etc/supervisord.conf
 # Start Supervisord
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
@@ -139,7 +140,7 @@ RUN chmod 755 /start.sh
 # add test PHP file
 # ADD ./index.php /usr/share/nginx/html/index.php
 RUN chown -Rf www-data.www-data /usr/share/nginx/html/
-
+VOLUME /usr/share/nginx/html
 # Expose Ports
 EXPOSE 443
 EXPOSE 80
