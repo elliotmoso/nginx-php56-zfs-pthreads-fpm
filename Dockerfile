@@ -26,7 +26,7 @@ apt-get upgrade -y && \
 BUILD_PACKAGES="supervisor nginx pwgen wget autoconf build-essential libfcgi-dev libfcgi0ldbl libjpeg62-dbg libmcrypt-dev libssl-dev libc-client2007e libc-client2007e-dev libxml2-dev" && \
 apt-get -y install $BUILD_PACKAGES && \
 ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a && \
-apt-get build-dep php5 && \
+apt-get -y build-dep php5 && \
 mkdir -p /opt/php-$PHP_VERSION && \
 mkdir -p mkdir /usr/local/src/php5-build && \
 cd /usr/local/src/php5-build && \
@@ -84,7 +84,8 @@ cd php-$PHP_VERSION && \
 make && make install && \
 cp /usr/local/src/php5-build/php-$PHP_VERSION/php.ini-production /opt/php-$PHP_VERSION/lib/php.ini && \
 cp /opt/php-$PHP_VERSION/etc/php-fpm.conf.default /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
-/opt/php-$PHP_VERSION/bin/pecl install pthreads
+/opt/php-$PHP_VERSION/bin/pecl install pthreads && \
+echo "extension=pthreads.so" >> /etc/php.ini
 
 
 RUN apt-get remove --purge -y software-properties-common && \
