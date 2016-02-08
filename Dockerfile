@@ -23,7 +23,7 @@ nginx=stable && \
 add-apt-repository ppa:nginx/$nginx && \
 apt-get update && \
 apt-get upgrade -y && \
-BUILD_PACKAGES="supervisor nginx pwgen wget autoconf build-essential libfcgi-dev libfcgi0ldbl libjpeg62-dbg libmcrypt-dev libssl-dev libc-client2007e libc-client2007e-dev openssl-dev libxml2-dev" && \
+BUILD_PACKAGES="supervisor nginx pwgen wget autoconf build-essential libfcgi-dev libfcgi0ldbl libjpeg62-dbg libmcrypt-dev libssl-dev libc-client2007e libc-client2007e-dev libxml2-dev" && \
 apt-get -y install $BUILD_PACKAGES && \
 ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
 apt-get build-dep php5 && \
