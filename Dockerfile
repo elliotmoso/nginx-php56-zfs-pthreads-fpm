@@ -6,7 +6,7 @@ ENV NEWRELIC_LICENSE    false
 ENV NEWRELIC_APP        false
 ENV PHP_CHILDREN        false
 ENV PHP_VERSION         5.6.18
-
+ENV PHP_PTHREADS_VERSION 2.0.10
 # Surpress Upstart errors/warning
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
@@ -84,7 +84,7 @@ cd php-$PHP_VERSION && \
 make && make install && \
 cp /usr/local/src/php5-build/php-$PHP_VERSION/php.ini-production /opt/php-$PHP_VERSION/lib/php.ini && \
 cp /opt/php-$PHP_VERSION/etc/php-fpm.conf.default /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
-/opt/php-$PHP_VERSION/bin/pecl install pthreads-1.0.0 && \
+/opt/php-$PHP_VERSION/bin/pecl install pthreads-$PHP_PTHREADS_VERSION && \
 echo "extension=pthreads.so" >> /opt/php-$PHP_VERSION/lib/php.ini
 
 
