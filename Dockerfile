@@ -84,7 +84,7 @@ cd php-$PHP_VERSION && \
 make && make install && \
 cp /usr/local/src/php5-build/php-$PHP_VERSION/php.ini-production /opt/php-$PHP_VERSION/lib/php.ini && \
 cp /opt/php-$PHP_VERSION/etc/php-fpm.conf.default /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
-/opt/php-$PHP_VERSION/bin/pecl install pthreads && \
+/opt/php-$PHP_VERSION/bin/pecl install pthreads-3.1.2 && \
 echo "extension=pthreads.so" >> /etc/php.ini
 
 
