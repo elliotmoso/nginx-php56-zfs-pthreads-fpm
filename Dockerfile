@@ -131,7 +131,7 @@ ADD ./www.conf /opt/php-$PHP_VERSION/etc/pool.d/www.conf
 
 # Supervisor Config
 ADD ./supervisord.conf /etc/supervisord.conf
-RUN sed -i "s/PHP_VERSION/$PHP_VERSION" /etc/supervisord.conf
+RUN sed -i "s/PHP_VERSION/$PHP_VERSION/g" /etc/supervisord.conf
 # Start Supervisord
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
