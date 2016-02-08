@@ -110,12 +110,6 @@ sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /opt/php-$PHP_VERSIO
 sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /opt/php-$PHP_VERSION/lib/php.ini && \
 sed -i -e "s/short_open_tag = Off/short_open_tag = On/g" /opt/php-$PHP_VERSION/lib/php.ini && \
 sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
-sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /opt/php-$PHP_VERSION/etc/pool.d/www.conf && \
-sed -i -e "s/pm.max_children = 5/pm.max_children = 9/g" /opt/php-$PHP_VERSION/etc/pool.d/www.conf && \
-sed -i -e "s/pm.start_servers = 2/pm.start_servers = 3/g" /opt/php-$PHP_VERSION/etc/pool.d/www.conf && \
-sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" /opt/php-$PHP_VERSION/etc/pool.d/www.conf && \
-sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" /opt/php-$PHP_VERSION/etc/pool.d/www.conf && \
-sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" /opt/php-$PHP_VERSION/etc/pool.d/www.conf && \
 sed -i -e "s/log_errors = On/log_errors = Off/g" /opt/php-$PHP_VERSION/lib/php.ini
 
 # nginx site conf
