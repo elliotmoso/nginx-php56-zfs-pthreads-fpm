@@ -118,7 +118,10 @@ rm -Rf /etc/nginx/sites-available/default && \
 mkdir -p /etc/nginx/ssl/
 ADD ./nginx-site.conf /etc/nginx/sites-available/default.conf
 RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
-RUN echo -e "[global]\nerror_log = /dev/null\ndaemonize = no\ninclude=etc/pool.d/*.conf" > /opt/php-$PHP_VERSION/etc/php-fpm.conf
+RUN echo "[global]\nerror_log = /dev/null" > /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
+echo "daemonize = no" >> /opt/php-$PHP_VERSION/etc/php-fpm.conf && \
+echo "include=etc/pool.d/*.conf" >> /opt/php-$PHP_VERSION/etc/php-fpm.conf
+
 # Install and Configure Newrelic
 RUN sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list && \
     wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
